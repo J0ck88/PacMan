@@ -836,6 +836,7 @@ var PACMAN = (function () {
         map.reset();
         map.draw(ctx);
         startLevel();
+        document.getElementById('buttonStart').style.visibility = 'hidden';
     }
 
 
@@ -983,6 +984,7 @@ var PACMAN = (function () {
         } else if (state === WAITING && stateChanged) {            
             stateChanged = false;
             map.draw(ctx);
+            document.getElementById('buttonStart').style.visibility = 'visible';
             dialog("Tap Start to start a new game...");            
         } else if (state === EATEN_PAUSE && 
                    (tick - timerStart) > (Pacman.FPS / 3)) {
@@ -1059,7 +1061,7 @@ var PACMAN = (function () {
         canvas.setAttribute("width", (blockSize * 19) + "px");
         canvas.setAttribute("height", (blockSize * 22) + 30 + "px");
  
-        buttonStart.setAttribute("name", "Start New Game");
+        buttonStart.setAttribute("id", "buttonStart");
     	buttonStart.addEventListener("touchstart", startNewGame);
     	
     	wrapper.appendChild(lineBreak);
