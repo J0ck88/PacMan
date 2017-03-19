@@ -760,13 +760,13 @@ Pacman.Audio = function(game) {
             files[playing[i]].pause();
         }
     };
-    
+
     function resume() { 
         for (var i = 0; i < playing.length; i++) {
             files[playing[i]].play();
-        }        
+        }    
     };
-    
+
     return {
         "disableSound" : disableSound,
         "load"         : load,
@@ -780,6 +780,7 @@ var PACMAN = (function () {
 
     var state        = WAITING,
         audio        = null,
+        soundOn		 = 1,
         ghosts       = [],
         ghostSpecs   = ["#00FFDE", "#FF0000", "#FFB8DE", "#FFB847"],
         eatenCount   = 0,
@@ -1046,7 +1047,17 @@ var PACMAN = (function () {
             e.stopPropagation();
         }
     };
-    
+
+    function toggleSound() {
+        if(!soundDisabled()) {
+            document.getElementById('buttonSound').style.background = "url(images/sound_off.png)";
+        } else {
+            document.getElementById('buttonSound').style.background = "url(images/sound_on.png)";
+    	}
+	    audio.disableSound();
+        localStorage["soundDisabled"] = !soundDisabled();
+    }
+
     function init(wrapper, root) {
         
         var i, len, ghost,
@@ -1055,7 +1066,8 @@ var PACMAN = (function () {
             textNode	= document.createTextNode("PACMAN"),
             buttonText	= document.createTextNode("START"),
         	buttonStart	  	= document.createElement("button"),
-        	paraPacMan		= document.createElement("P");
+            buttonSound	  	= document.createElement("button"),
+            paraPacMan		= document.createElement("P"),
         	lineBreak		= document.createElement("br");
 
         buttonStart.appendChild(buttonText);
@@ -1063,14 +1075,24 @@ var PACMAN = (function () {
 
         canvas.setAttribute("width", (blockSize * 19) + "px");
         canvas.setAttribute("height", (blockSize * 22) + 30 + "px");
- 
+
+        paraPacMan.setAttribute("id", "gameName");
+        buttonSound.setAttribute("id", "buttonSound");
+        buttonSound.addEventListener("touchstart", toggleSound);
+
         buttonStart.setAttribute("id", "buttonStart");
     	buttonStart.addEventListener("touchstart", startNewGame);
-    	
+
     	wrapper.appendChild(lineBreak);
     	wrapper.appendChild(paraPacMan);
+        wrapper.appendChild(buttonSound);
         wrapper.appendChild(canvas);
         wrapper.appendChild(buttonStart);
+
+        /* Set button image to older sound context */
+        if(soundDisabled()) {
+    	    document.getElementById('buttonSound').style.background = "url(images/sound_off.png)";
+        }
 
         ctx  = canvas.getContext('2d');
 

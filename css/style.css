@@ -33,9 +33,25 @@ P {
 	text-align: center;
     font-size: 2em;
 }
+
 button {
 	font-family: BDCartoonShoutRegular;
 	margin-left: 1em;
 	text-align: center;
     font-size: 1.5em;
+}
+
+#gameName {
+	display:inline-block;
+	margin-left: 25%;
+	margin-right:5%;
+}
+
+#buttonSound {
+	display:inline-block;
+	width: 10%;
+	height: 10%;
+	background: url('../images/sound_on.png');
+	background-size:cover;
+	background-repeat: no-repeat;
 }
