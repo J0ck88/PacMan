@@ -874,6 +874,9 @@ var PACMAN = (function () {
         if (user.getLives() > 0) {
             startLevel();
         }
+        else {
+            alert("Game Over! Your Score: " + user.theScore());
+        }
     }
 
     function setState(nState) { 
